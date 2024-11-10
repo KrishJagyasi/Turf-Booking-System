@@ -1,0 +1,12 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Booking {
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
+  phoneNumber String
+  turfType    String
+  createdAt   DateTime @default(now())
+}
