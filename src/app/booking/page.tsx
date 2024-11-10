@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { prisma } from '@/lib/prisma'
 
 export default function Booking() {
   const [step, setStep] = useState(1)
@@ -36,9 +37,20 @@ export default function Booking() {
     setStep(4)
   }
 
-  const handlePayment = () => {
+  const handlePayment = async () => {
     // In a real app, you would integrate with a payment gateway here
     setStep(5)
+    await fetch("http://localhost:3000/api/bookTurf", {
+      method: "POST",
+      body: JSON.stringify({
+        email: user.email,
+        phoneNumber: user.Number,
+        turfType: booking.turf
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
   }
 
   const renderStepContent = () => {
